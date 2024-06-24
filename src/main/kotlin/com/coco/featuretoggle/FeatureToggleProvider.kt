@@ -11,6 +11,11 @@ class FeatureToggleProvider(
     // <ToggleKey, ToggleConfiguration>
     private val toggleConfigMap: AtomicReference<Map<String, ToggleConfiguration>> = AtomicReference(emptyMap())
 
+    //for test
+    init {
+        this.syncToggleConfiguration()
+    }
+
     @Scheduled(fixedDelay = 5000)
     fun syncToggleConfiguration() {
         // Sync toggle configuration to toggleConfigMap
