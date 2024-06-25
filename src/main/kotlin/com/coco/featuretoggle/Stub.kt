@@ -12,7 +12,7 @@ object Stub {
             return listOf(
                 ToggleConfiguration(
                     key = DEFAULT_FEATURE,
-                    enabled = true,
+                    enabled = false,
                     debug = true,
                     permission = ToggleConfiguration.PermissionToggle(
                         enabled = false,

@@ -15,7 +15,7 @@ class FeaturetoggleApplicationTests {
 	@Test
 	fun defaultFeaturetoggle() {
 		val result = service.defaultFeatureMethod()
-		assertThat(result).isEqualTo(Stub.DEFAULT_FEATURE)
+		assertThat(result).isEqualTo("old")
 	}
 
 	@Test
