@@ -1,6 +1,5 @@
 package com.coco.featuretoggle
 
-import com.coco.featuretoggle.Stub.ToggleConfiguration
 import com.coco.featuretoggle.Stub.ToggleRepository
 import org.springframework.scheduling.annotation.Scheduled
 import java.util.concurrent.atomic.AtomicReference
