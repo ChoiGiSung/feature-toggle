@@ -19,9 +19,10 @@ class FeatureToggleAspect(
     fun featureToggleAroundAdvice(proceedingJoinPoint: ProceedingJoinPoint, featureToggleAnnotation: FeatureToggle): Any? {
         val key = featureToggleAnnotation.key
         val fallbackMethod = featureToggleAnnotation.fallbackMethod
+        val userId = Stub.UserHolder.userId
 
         // Toggle Point
-        if (featureToggleProvider.isEnabled(key)) {
+        if (featureToggleProvider.isEnabled(key, userId)) {
             return proceedingJoinPoint.proceed()
         }
 

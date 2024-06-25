@@ -1,5 +1,7 @@
 package com.coco.featuretoggle
 
+import com.coco.featuretoggle.Stub.UserHolder.userId
+
 object Stub {
     const val TRUE_FEATURE = "sample-feature-true"
     const val FALSE_FEATURE = "sample-feature-false"
@@ -7,23 +9,27 @@ object Stub {
     class ToggleRepository {
         fun findAll(): List<ToggleConfiguration> {
             return listOf(
-                ToggleConfiguration(TRUE_FEATURE, true),
-                ToggleConfiguration(FALSE_FEATURE, false)
+                ToggleConfiguration(
+                    key = TRUE_FEATURE,
+                    enabled = true,
+                    debug = true,
+                    permission = ToggleConfiguration.PermissionToggle(
+                        enabled = true,
+                        debug = true,
+                        userIds = setOf(userId, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                    ),
+                    canary = ToggleConfiguration.CanaryToggle(
+                        enabled = true,
+                        debug = true,
+                        percentage = 50
+                    )
+                )
             )
         }
     }
 
-    open class ToggleConfiguration(
-        open val key: String,
-        open val value: Boolean
-    )
-
-    class CanaryToggleConfiguration(
-        override val key: String,
-        override val value: Boolean,
-        val debug: Boolean,
-        val permittedUserIds: Set<Long> = emptySet(),
-        val canaryUserPercentage: Int// 0 to 100
-    ) : ToggleConfiguration(key, value)
+    object UserHolder {
+        var userId = 1L
+    }
 
 }

@@ -20,17 +20,34 @@ class FeatureToggleProvider(
     fun syncToggleConfiguration() {
         // Sync toggle configuration to toggleConfigMap
         val newToggleConfigMap = repository.findAll()
-            .associateBy({ it.key }, { this.parseConfig(it) })
+            .associateBy { it.key }
         toggleConfigMap.set(newToggleConfigMap)
     }
 
-    private fun parseConfig(config: ToggleConfiguration): ToggleConfiguration {
-        //custom parse something
-        return ToggleConfiguration(config.key, config.value)
-    }
+    fun isEnabled(key: String, userId: Long?): Boolean {
+        val toggleConfig = this.toggleConfigMap.get()[key] ?: return false
 
-    fun isEnabled(key: String): Boolean {
-        val toggleConfig = toggleConfigMap.get()[key] ?: return false
-        return toggleConfig.value
+        // Permissioning Toggle; 권한이 있는 사용자에게 Feature 적용
+        if (toggleConfig.isPermittedUser(userId)) {
+            if (toggleConfig.permission.debug) {
+                println("[FeatureToggleProvider] Permission Toggle - key($key), userId($userId), enabled(true)")
+            }
+            return true
+        }
+
+        // Canary Toggle; Canary 그룹에 포함된 사용자에게 Feature 적용
+        if (toggleConfig.isCanaryGroupedUser(userId)) {
+            if (toggleConfig.canary.debug) {
+                println("[FeatureToggleProvider] Canary Toggle - key($key), userId($userId), enabled(true)")
+            }
+            return true
+        }
+
+        if (toggleConfig.debug) {
+            println("[FeatureToggleProvider] Feature Toggle - key($key), userId($userId), enabled(${toggleConfig.enabled})")
+        }
+
+        // 전체 사용자에게 Feature 적용
+        return toggleConfig.enabled
     }
 }
