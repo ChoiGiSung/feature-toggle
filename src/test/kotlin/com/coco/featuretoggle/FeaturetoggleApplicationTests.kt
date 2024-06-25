@@ -13,14 +13,20 @@ class FeaturetoggleApplicationTests {
 
 
 	@Test
-	fun trueFeaturetoggle() {
-		val result = service.trueMethod()
-		assertThat(result).isEqualTo("new")
+	fun defaultFeaturetoggle() {
+		val result = service.defaultFeatureMethod()
+		assertThat(result).isEqualTo(Stub.DEFAULT_FEATURE)
 	}
 
 	@Test
-	fun falseFeaturetoggle() {
-		val result = service.falseMethod()
-		assertThat(result).isEqualTo("old")
+	fun permissionFeaturetoggle() {
+		val result = service.permissionFeatureMethod()
+		assertThat(result).isEqualTo(Stub.PERMISSION_FEATURE)
+	}
+
+	@Test
+	fun canaryFeaturetoggle() {
+		val result = service.canaryFeatureMethod()
+		assertThat(result).isEqualTo(Stub.CANARY_FEATURE)
 	}
 }

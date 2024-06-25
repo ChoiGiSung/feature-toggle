@@ -8,13 +8,13 @@ class ToggleConfiguration(
     val canary: CanaryToggle
 ) {
     fun isPermittedUser(userId: Long?): Boolean {
-        return this.permission.userIds.contains(userId)
+        return this.permission.enabled && this.permission.userIds.contains(userId)
     }
 
     fun isCanaryGroupedUser(userId: Long?): Boolean {
         if (userId == null) return false
         val userHash = userId % 100
-        return userHash < canary.percentage
+        return this.canary.enabled && userHash < canary.percentage
     }
 
     class PermissionToggle(
