@@ -32,7 +32,7 @@ object Stub {
                     permission = ToggleConfiguration.PermissionToggle(
                         enabled = true,
                         debug = true,
-                        userIds = setOf(userId, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                        userIds = setOf(1, 2, 3, 4, 5, 6, 7, 8, 9, userId)
                     ),
                     canary = ToggleConfiguration.CanaryToggle(
                         enabled = false,
